@@ -1,0 +1,38 @@
+[
+  {
+    "Command": "AT+RSET=1",
+    "Description": "初始化",
+    "IsCheck": true,
+    "IsHexSend": false
+  },
+  {
+    "Command": "close",
+    "Description": "关闭",
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "open",
+    "Description": "打开",
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "16 54 0D",
+    "Description": "开扫描",
+    "IsCheck": true,
+    "IsHexSend": true
+  },
+  {
+    "Command": "16 55 0D",
+    "Description": "关扫描",
+    "IsCheck": true,
+    "IsHexSend": true
+  },
+  {
+    "Command": "AT+MRST=1",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  }
+]

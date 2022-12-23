@@ -1,0 +1,236 @@
+﻿<UserControl
+    x:Class="WpfApp3.Views.DebugView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:debug="clr-namespace:WpfApp3.ViewModels"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:WpfApp3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    d:DesignHeight="450"
+    d:DesignWidth="895"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <!--<UserControl.Resources>
+        <debug:DebugViewViewModel x:Key="ijfe" />
+    </UserControl.Resources>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <UniformGrid Rows="1">
+            <Button
+                Margin="20,0,20,0"
+                materialDesign:ShadowAssist.ShadowDepth="Depth4"
+                Command="{Binding OpenSpCommand}"
+                Content="Open"
+                Style="{Binding Source={StaticResource buttonStyle}}" />
+            <Button
+                Margin="20,0,20,0"
+                materialDesign:ShadowAssist.ShadowDepth="Depth4"
+                Command="{Binding CloseSpCommand}"
+                Content="Close"
+                Style="{Binding Source={StaticResource buttonStyle}}" />
+        </UniformGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="426*" />
+                <ColumnDefinition Width="379*" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="MessageBox"
+                Margin="5,10,5,10"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                HorizontalScrollBarVisibility="Auto"
+                IsReadOnly="True"
+                Text="{Binding Message}"
+                TextWrapping="WrapWithOverflow"
+                VerticalScrollBarVisibility="Visible" />
+            <GridSplitter
+                Grid.Column="0"
+                Width="3"
+                Margin="0,10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Stretch" />
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ComboBox
+                    Name="portnametb"
+                    Grid.Row="0"
+                    materialDesign:HintAssist.Hint="选择型号"
+                    FontWeight="Bold"
+                    IsEditable="False"
+                    IsSynchronizedWithCurrentItem="True"
+                    ItemsSource="{Binding Models}"
+                    SelectedIndex="0"
+                    SelectedItem="{Binding CurrentModel}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                <DataGrid
+                    x:Name="DataDisplyGrid"
+                    Grid.Row="1"
+                    Margin="0,0,10,10"
+                    AllowDrop="True"
+                    AutoGenerateColumns="False"
+                    CanUserSortColumns="False"
+                    ItemsSource="{Binding SP_Propertys, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding CurrentSendData}"
+                    SelectionMode="Extended"
+                    SelectionUnit="FullRow"
+                    VerticalScrollBarVisibility="Visible">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CurrentCellChanged">
+                            <i:InvokeCommandAction Command="{Binding SaveDataCommand}" CommandParameter="{Binding CurrentModel}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseMove">
+                            <i:InvokeCommandAction Command="{Binding MouseMoveCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="DragEnter" >
+                            <i:InvokeCommandAction Command="{Binding DragEnterCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Drop">
+                            <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <!--<i:Interaction.Behaviors>
+                        <i:MouseDragElementBehavior />
+                    </i:Interaction.Behaviors>-->
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCheck}" Value="true">
+                                    <Setter Property="Foreground" Value="#000000" />
+                                    <Setter Property="FontWeight" Value="Bold" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsHexSend}" Value="true">
+                                    <Setter Property="Foreground" Value="BlueViolet" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn DisplayIndex="0" Header="Send">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Width="90"
+                                        Margin="0.5"
+                                        Command="{Binding DataContext.SendDataCommand, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding Path=DataContext.CurrentSendData, RelativeSource={RelativeSource AncestorLevel=1, Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Content="&#xe60a;"
+                                        FontFamily="/WeTest.Resource;component/Fonts/#iconfont"
+                                        FontSize="20"
+                                        Style="{Binding Source={StaticResource buttonStyle}}"
+                                        ToolTip="发送" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding Command, UpdateSourceTrigger=PropertyChanged}" Header="Commad" />
+                        <DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Description" />
+                        <DataGridCheckBoxColumn Binding="{Binding IsCheck, UpdateSourceTrigger=PropertyChanged}" Header="IsCheck" />
+                        <DataGridCheckBoxColumn Binding="{Binding IsHexSend, UpdateSourceTrigger=PropertyChanged}" Header="IsHexSend" />
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                                Command="{Binding AddRowCommand}"
+                                CommandParameter="{Binding CurrentSendData}"
+                                Header="添加行" />
+                            <MenuItem
+                                Command="{Binding DeleteRowCommand}"
+                                CommandParameter="{Binding CurrentSendData}"
+                                Header="删除行" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                </DataGrid>
+            </Grid>
+        </Grid>
+        <StatusBar Grid.Row="2" Margin="10,0,10,0">
+            <ComboBox
+                x:Name="ComPort"
+                materialDesign:HintAssist.Hint="选择串口号"
+                IsSynchronizedWithCurrentItem="True"
+                ItemsSource="{Binding SP_PortNames, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding CurrentSPPort}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DropDownOpened">
+                        <i:InvokeCommandAction Command="{Binding ComPortDropDownOpenedCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="DropDownClosed">
+                        <i:InvokeCommandAction Command="{Binding ComPortDropDownClosedCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <Separator />
+            <ComboBox
+                materialDesign:HintAssist.Hint="选择波特率"
+                ItemsSource="{Binding SP_BaudRates}"
+                SelectedValue="{Binding CurrentBaudRate}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+            <Separator />
+            <CheckBox Content="回车" IsChecked="{Binding IsEnter}" />
+            <Separator />
+            <CheckBox Content="换行" IsChecked="{Binding IsWrap}" />
+            <Separator />
+            <CheckBox Content="HEX显示" IsChecked="{Binding HEXDisplay}" />
+            <Separator />
+            <TextBlock Text="发送间隔(ms):" />
+            <TextBox Text="{Binding IntervalTime}" />
+            <Separator />
+            <TextBlock Text="添加型号：" />
+            <TextBox x:Name="modename" Text="{Binding AddModelName}" />
+            <Separator />
+            <Button
+                Width="60"
+                Height="30"
+                Command="{Binding AddModelCommand}"
+                Content="&#xe601;"
+                FontFamily="/WeTest.Resource;component/Fonts/#iconfont"
+                FontSize="20"
+                Style="{Binding Source={StaticResource buttonStyle}}"
+                ToolTip="添加型号" />
+            <Separator />
+            <Button
+                Width="60"
+                Height="30"
+                Command="{Binding ClearDataCommand}"
+                Content="&#xe63f;"
+                FontFamily="/WeTest.Resource;component/Fonts/#iconfont"
+                FontSize="20"
+                Style="{Binding Source={StaticResource buttonStyle}}"
+                ToolTip="清除数据" />
+            <Button
+                Width="60"
+                Height="30"
+                Command="{Binding ContinuedSendCommand}"
+                Content="&#xe60a;"
+                FontFamily="/WeTest.Resource;component/Fonts/#iconfont"
+                FontSize="20"
+                Style="{Binding Source={StaticResource buttonStyle}}"
+                ToolTip="连续发送" />
+            <Separator />
+            <StatusBarItem HorizontalAlignment="Right">
+                <Button
+                    Width="60"
+                    Height="30"
+                    Command="{Binding SaveDataCommand}"
+                    CommandParameter="{Binding CurrentModel}"
+                    Content="&#xe604;"
+                    FontFamily="/WeTest.Resource;component/Fonts/#iconfont"
+                    FontSize="20"
+                    Style="{Binding Source={StaticResource buttonStyle}}"
+                    ToolTip="保存数据" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</UserControl>

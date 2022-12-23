@@ -1,0 +1,12 @@
+自定义控件
+	1：选择正确的基类（选择与自己要实现功能的现有控件相似的控件作为基类）
+		1.1最基础的类是UIElement类
+		1.2FrameworkElement
+		1.3Control
+		1.4ContentControl
+		1.5HeaderedContentControl
+		1.6ItemsControl
+		1.7Selector
+		1.8RangeBase
+		1.9 ExistingControl(现有控件）
+	2：

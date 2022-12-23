@@ -1,0 +1,20 @@
+[
+  {
+    "UserName": "admin",
+    "Password": "223",
+    "UserRole": 1,
+    "LoginState": true
+  },
+  {
+    "UserName": "Operator",
+    "Password": "",
+    "UserRole": 0,
+    "LoginState": true
+  },
+  {
+    "UserName": "admin123",
+    "Password": "123",
+    "UserRole": 1,
+    "LoginState": true
+  }
+]

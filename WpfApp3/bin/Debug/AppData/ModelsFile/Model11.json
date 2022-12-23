@@ -1,0 +1,32 @@
+[
+  {
+    "Command": "open12",
+    "Description": "打开",
+    "IsCheck": true,
+    "IsHexSend": false
+  },
+  {
+    "Command": "close12",
+    "Description": "关闭",
+    "IsCheck": true,
+    "IsHexSend": true
+  },
+  {
+    "Command": "090",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "090",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "9089089",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  }
+]

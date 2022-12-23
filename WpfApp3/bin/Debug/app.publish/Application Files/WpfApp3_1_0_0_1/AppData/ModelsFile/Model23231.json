@@ -1,0 +1,50 @@
+[
+  {
+    "Command": "fo",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": true
+  },
+  {
+    "Command": null,
+    "Description": "fiejfkeff",
+    "IsCheck": false,
+    "IsHexSend": true
+  },
+  {
+    "Command": null,
+    "Description": "fiejfkeff",
+    "IsCheck": false,
+    "IsHexSend": true
+  },
+  {
+    "Command": null,
+    "Description": "fiejfkeff",
+    "IsCheck": false,
+    "IsHexSend": true
+  },
+  {
+    "Command": "fo",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": true
+  },
+  {
+    "Command": "primary",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "fjiejfe",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  },
+  {
+    "Command": "jiejfle",
+    "Description": null,
+    "IsCheck": false,
+    "IsHexSend": false
+  }
+]

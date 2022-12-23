@@ -1,0 +1,20 @@
+[
+  {
+    "Command": "fe",
+    "Description": "fe",
+    "IsCheck": true,
+    "IsHexSend": true
+  },
+  {
+    "Command": "ffef",
+    "Description": "fef",
+    "IsCheck": true,
+    "IsHexSend": false
+  },
+  {
+    "Command": "Description",
+    "Description": "Equipment",
+    "IsCheck": false,
+    "IsHexSend": false
+  }
+]
